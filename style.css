@@ -1,0 +1,1216 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #140b10;
+  --bg2: #211018;
+  --pink: #e99ab0;
+  --pink-light: #ffd2df;
+  --pink-deep: #b84d70;
+  --cream: #fff4f1;
+  --green: #526d4f;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--cream);
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #3a1825 0%,
+      var(--bg2) 35%,
+      var(--bg) 75%
+    );
+}
+
+button {
+  font: inherit;
+}
+
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #421c2c 0%,
+      #211018 40%,
+      #0f080c 100%
+    );
+
+  transition:
+    opacity 1.2s ease,
+    visibility 1.2s ease;
+}
+
+.intro-content {
+  text-align: center;
+  padding: 30px;
+
+  animation:
+    introFloat 4s ease-in-out infinite;
+}
+
+.eyebrow {
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-size: .72rem;
+  opacity: .7;
+  margin-bottom: 18px;
+}
+
+.intro h1 {
+  font-size:
+    clamp(3rem, 10vw, 7rem);
+
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.intro h1 span {
+  font-size: .65em;
+}
+
+.intro-content > p:not(.eyebrow) {
+  opacity: .75;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+#enterBtn,
+#restartBtn {
+  border:
+    1px solid
+    rgba(255, 210, 223, .4);
+
+  background:
+    rgba(255, 255, 255, .06);
+
+  color: var(--cream);
+
+  border-radius: 999px;
+
+  padding: 12px 28px;
+
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+#enterBtn:hover,
+#restartBtn:hover {
+  background:
+    rgba(255, 210, 223, .15);
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   EXPERIENCE
+   ========================================================= */
+
+.experience {
+  position: fixed;
+  inset: 0;
+
+  transition:
+    opacity 1s ease;
+}
+
+.ambient-glow {
+  position: absolute;
+
+  width: 55vmin;
+  height: 55vmin;
+
+  left: 50%;
+  top: 48%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(221, 103, 137, .13);
+
+  filter:
+    blur(70px);
+
+  pointer-events: none;
+}
+
+.top-message {
+  position: absolute;
+
+  top: 30px;
+  left: 0;
+
+  width: 100%;
+
+  text-align: center;
+
+  font-style: italic;
+
+  opacity: .6;
+
+  font-size: .95rem;
+}
+
+
+/* =========================================================
+   FLOWER SCENE
+   ========================================================= */
+
+.flower-scene {
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+}
+
+
+/* =========================================================
+   FLOWER
+   ========================================================= */
+
+.flower {
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  width:
+    min(78vmin, 760px) !important;
+
+  height:
+    min(78vmin, 760px) !important;
+
+  margin: 0 !important;
+
+  transform:
+    translate(-50%, -50%) !important;
+
+  animation:
+    flowerBreathFixed 6s
+    ease-in-out infinite !important;
+
+  transform-origin:
+    50% 50%;
+
+  transition:
+    filter .8s ease;
+}
+
+.peony-svg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+
+  transform: none !important;
+
+  filter:
+    drop-shadow(
+      0 18px 25px
+      rgba(0, 0, 0, .18)
+    );
+}
+
+
+/* =========================================================
+   NORMAL SVG PETALS
+   ========================================================= */
+
+.petal-position {
+  cursor: grab;
+
+  transform-box: fill-box;
+  transform-origin: 0 0;
+
+  transition:
+    filter .25s ease,
+    opacity .25s ease;
+
+  will-change:
+    filter,
+    opacity;
+
+  touch-action: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.petal-position.hovered {
+  filter:
+    brightness(1.08)
+    saturate(1.08)
+    drop-shadow(
+      0 5px 10px
+      rgba(255, 150, 180, .18)
+    );
+}
+
+.petal-position.dragging {
+  z-index: 1000;
+}
+
+.petal-position.dragging
+.petal-animated {
+  filter:
+    brightness(1.08)
+    saturate(1.12)
+    drop-shadow(
+      0 12px 20px
+      rgba(255, 150, 180, .3)
+    );
+}
+
+.petal-position:active {
+  cursor: grabbing;
+}
+
+.petal-position.plucked {
+  pointer-events: none;
+}
+
+.petal-animated {
+  transform-box: fill-box;
+
+  transform-origin: 0 0;
+
+  will-change:
+    transform,
+    opacity;
+
+  animation:
+    petalAliveFixed
+    var(--petal-life-duration, 7s)
+    ease-in-out
+    var(--petal-life-delay, 0s)
+    infinite;
+}
+
+.petal-position.hovered
+.petal-animated {
+  animation:
+    petalHoverFixed
+    .5s
+    cubic-bezier(.2,.8,.2,1)
+    both;
+}
+
+.petal-position.plucked
+.petal-animated {
+  animation: none !important;
+}
+
+
+/* =========================================================
+   PETAL APPEARANCE
+   ========================================================= */
+
+.petal-shape {
+  stroke:
+    rgba(255, 240, 247, .16);
+
+  stroke-width: 2;
+
+  paint-order:
+    stroke fill;
+}
+
+.petal-vein {
+  fill: none;
+
+  stroke:
+    rgba(255, 248, 250, .58);
+
+  stroke-width: 3.5;
+
+  stroke-linecap: round;
+}
+
+
+/* =========================================================
+   SPECIAL MEMORY PETALS
+   ========================================================= */
+
+.petal-position[data-special="true"] {
+  filter:
+    saturate(1.06);
+}
+
+.petal-position[data-special="true"]:hover {
+  filter:
+    brightness(1.08)
+    saturate(1.1)
+    drop-shadow(
+      0 0 7px
+      rgba(255, 165, 195, .18)
+    );
+}
+
+
+/* =========================================================
+   INNER BUD PETALS
+   ========================================================= */
+
+/*
+  IMPORTANT:
+  These petals keep their manually created SVG
+  transform from JavaScript.
+
+  NOTHING HERE changes their initial position.
+*/
+
+.inner-cup-petal {
+  pointer-events: none;
+
+  transform-box: fill-box;
+
+  transform-origin: 0 0;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+.inner-cup-petal
+.petal-shape {
+  stroke:
+    rgba(255, 240, 247, .22);
+
+  stroke-width: 2;
+
+  paint-order:
+    stroke fill;
+}
+
+
+/* =========================================================
+   CENTER
+   ========================================================= */
+
+.flower-center-realistic {
+  transform: none !important;
+
+  transform-origin:
+    425px 500px !important;
+
+  pointer-events: none;
+
+  position: relative;
+
+  z-index: 50;
+
+  filter:
+    drop-shadow(
+      0 2px 5px
+      rgba(100, 30, 40, .18)
+    );
+}
+
+.flower-center-realistic .stamen {
+  stroke:
+    #d98b30;
+
+  stroke-width:
+    2.5;
+
+  stroke-linecap:
+    round;
+
+  opacity:
+    .95;
+}
+
+.flower-center-realistic .anther {
+  fill:
+    #e9a33c;
+
+  opacity:
+    .98;
+}
+
+
+/* =========================================================
+   PETAL LIVING ANIMATION
+   ========================================================= */
+
+@keyframes petalAliveFixed {
+
+  0%,
+  100% {
+    transform:
+      rotate(
+        calc(
+          var(--petal-sway, 2deg)
+          * -0.35
+        )
+      )
+      scale(1);
+  }
+
+  50% {
+    transform:
+      rotate(
+        var(--petal-sway, 2deg)
+      )
+      scale(1.008);
+  }
+}
+
+@keyframes petalHoverFixed {
+
+  0% {
+    transform:
+      rotate(0deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      rotate(2deg)
+      scale(1.035);
+  }
+
+  100% {
+    transform:
+      rotate(0deg)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   FLOWER BREATHING
+   ========================================================= */
+
+@keyframes flowerBreathFixed {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.012);
+  }
+}
+
+
+/* =========================================================
+   BREEZE
+   ========================================================= */
+
+.flower.breezing {
+  animation:
+    flowerWindCentered
+    2.4s
+    ease-in-out;
+}
+
+@keyframes flowerWindCentered {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0);
+  }
+
+  22% {
+    transform:
+      translate(
+        calc(-50% + 7px),
+        -50%
+      )
+      rotate(2deg);
+  }
+
+  48% {
+    transform:
+      translate(
+        calc(-50% - 8px),
+        -50%
+      )
+      rotate(-2.4deg);
+  }
+
+  72% {
+    transform:
+      translate(
+        calc(-50% + 4px),
+        -50%
+      )
+      rotate(1.1deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0);
+  }
+}
+
+
+/* =========================================================
+   FINAL BLOOM GLOW
+   ========================================================= */
+
+.flower.bud-blooming {
+  filter:
+    drop-shadow(
+      0 0 25px
+      rgba(255, 150, 190, .22)
+    )
+    drop-shadow(
+      0 18px 25px
+      rgba(0, 0, 0, .18)
+    );
+}
+
+
+/* =========================================================
+   FINAL 14 MEMORY PHOTOS
+   ========================================================= */
+
+.bloom-memory {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 105px;
+  height: 105px;
+
+  /*
+    Starts directly inside the flower.
+  */
+
+  transform:
+    translate(-50%, -50%)
+    translate(0, 0)
+    scale(.15)
+    rotate(-8deg);
+
+  opacity: 0;
+
+  z-index: 80;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  background:
+    #2a1820;
+
+  box-shadow:
+    0 12px 35px
+      rgba(0, 0, 0, .35),
+
+    0 0 0 3px
+      rgba(255, 255, 255, .12),
+
+    0 0 20px
+      rgba(255, 170, 200, .12);
+
+  pointer-events: none;
+
+  transition:
+    transform
+      1.15s
+      cubic-bezier(.16,.82,.18,1),
+
+    opacity
+      .7s
+      ease;
+}
+
+.bloom-memory.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, -50%)
+    translate(
+      var(--photo-x),
+      var(--photo-y)
+    )
+    scale(1)
+    rotate(0deg);
+}
+
+.bloom-memory img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.bloom-memory-number {
+  position: absolute;
+
+  bottom: 5px;
+  right: 6px;
+
+  width: 22px;
+  height: 22px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(20, 8, 14, .72);
+
+  color: white;
+
+  font-size: .65rem;
+
+  backdrop-filter:
+    blur(5px);
+
+  box-shadow:
+    0 2px 5px
+    rgba(0, 0, 0, .25);
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.hint {
+  position: absolute;
+
+  bottom: 7vh;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  width: max-content;
+
+  max-width: 90vw;
+
+  text-align: center;
+
+  opacity: .55;
+
+  font-style: italic;
+
+  font-size: .9rem;
+
+  transition:
+    opacity .5s ease;
+}
+
+
+/* =========================================================
+   COUNTER
+   ========================================================= */
+
+.counter {
+  position: absolute;
+
+  bottom: 28px;
+  right: 30px;
+
+  font-size: .75rem;
+
+  opacity: .4;
+}
+
+
+/* =========================================================
+   BREEZE PETALS
+   ========================================================= */
+
+.breeze-petal {
+  position: absolute;
+
+  width: 20px;
+  height: 34px;
+
+  border-radius:
+    70% 30% 65% 35%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffe8f0,
+      #ef9ab5
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  filter:
+    blur(.2px)
+    drop-shadow(
+      0 3px 6px
+      rgba(0,0,0,.12)
+    );
+}
+
+.breeze-petal.fly {
+  animation:
+    breezePetalFly
+    3.2s
+    cubic-bezier(.22,.61,.36,1)
+    forwards;
+}
+
+@keyframes breezePetalFly {
+
+  0% {
+    left: -8%;
+
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      rotate(-20deg)
+      scale(.7);
+  }
+
+  12% {
+    opacity: .65;
+  }
+
+  35% {
+    transform:
+      translateY(-35px)
+      rotate(65deg)
+      scale(.9);
+  }
+
+  60% {
+    transform:
+      translateY(25px)
+      rotate(145deg)
+      scale(1);
+  }
+
+  82% {
+    transform:
+      translateY(-45px)
+      rotate(230deg)
+      scale(.85);
+  }
+
+  100% {
+    left: 108%;
+
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      rotate(320deg)
+      scale(.65);
+  }
+}
+
+
+/* =========================================================
+   MEMORY OVERLAY
+   ========================================================= */
+
+.memory-overlay,
+.final-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 200;
+
+  display: grid;
+  place-items: center;
+
+  padding: 25px;
+
+  background:
+    rgba(10, 5, 8, .84);
+
+  backdrop-filter:
+    blur(10px);
+
+  transition:
+    opacity .7s ease;
+}
+
+.memory-card {
+  width:
+    min(90vw, 700px);
+
+  text-align: center;
+
+  animation:
+    memoryBloom
+    1s
+    cubic-bezier(.16,.82,.18,1);
+}
+
+.memory-image-wrap {
+  width:
+    min(80vw, 580px);
+
+  aspect-ratio:
+    4 / 3;
+
+  margin:
+    0 auto 25px;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.45);
+
+  background:
+    #2a1820;
+
+  transform-origin:
+    center;
+
+  animation:
+    photoReveal
+    1.15s
+    cubic-bezier(.16,.82,.18,1);
+}
+
+.memory-image-wrap img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  animation:
+    photoSettle
+    1.4s
+    ease-out;
+}
+
+.memory-number {
+  font-size: .7rem;
+
+  letter-spacing: .18em;
+
+  text-transform:
+    uppercase;
+
+  opacity: .5;
+
+  margin-bottom: 10px;
+}
+
+.memory-card h2 {
+  font-size:
+    clamp(1.8rem, 5vw, 3rem);
+
+  font-weight: 400;
+
+  margin-bottom: 12px;
+}
+
+.memory-card > p:last-child {
+  max-width: 600px;
+
+  margin: auto;
+
+  line-height: 1.7;
+
+  opacity: .75;
+}
+
+.close-memory {
+  position: absolute;
+
+  top: 24px;
+  right: 28px;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  color: white;
+
+  font-size: 2rem;
+
+  cursor: pointer;
+
+  opacity: .7;
+}
+
+
+/* =========================================================
+   FINAL OVERLAY
+   ========================================================= */
+
+.final-content {
+  width:
+    min(90vw, 720px);
+
+  text-align: center;
+
+  animation:
+    memoryIn
+    1s
+    ease;
+}
+
+.final-content h2 {
+  font-size:
+    clamp(2.5rem, 8vw, 5.5rem);
+
+  line-height: 1.05;
+
+  font-weight: 400;
+
+  margin-bottom: 28px;
+}
+
+.final-content > p:not(.eyebrow) {
+  max-width: 600px;
+
+  margin:
+    0 auto 30px;
+
+  line-height: 1.8;
+
+  opacity: .78;
+
+  font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   OTHER ANIMATIONS
+   ========================================================= */
+
+@keyframes introFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-8px);
+  }
+}
+
+@keyframes memoryIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(.88)
+      translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+}
+
+@keyframes memoryBloom {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(25px)
+      scale(.72);
+  }
+
+  55% {
+    opacity: 1;
+
+    transform:
+      translateY(-4px)
+      scale(1.025);
+  }
+
+  75% {
+    transform:
+      translateY(2px)
+      scale(.995);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes photoReveal {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      scale(.45)
+      rotate(-3deg);
+
+    border-radius: 50%;
+
+    filter:
+      blur(12px);
+  }
+
+  35% {
+    opacity: .75;
+
+    transform:
+      scale(.82)
+      rotate(1deg);
+
+    border-radius: 22px;
+
+    filter:
+      blur(5px);
+  }
+
+  70% {
+    opacity: 1;
+
+    transform:
+      scale(1.04)
+      rotate(-.5deg);
+
+    border-radius: 18px;
+
+    filter:
+      blur(1px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      rotate(0);
+
+    border-radius: 16px;
+
+    filter:
+      blur(0);
+  }
+}
+
+@keyframes photoSettle {
+
+  from {
+    transform:
+      scale(1.08);
+  }
+
+  to {
+    transform:
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .flower {
+    width:
+      min(94vmin, 680px) !important;
+
+    height:
+      min(94vmin, 680px) !important;
+  }
+
+  .hint {
+    bottom: 9vh;
+  }
+
+  .counter {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .memory-image-wrap {
+    width: 88vw;
+  }
+
+  .bloom-memory {
+    width: 72px;
+    height: 72px;
+
+    border-radius: 10px;
+  }
+
+  .bloom-memory-number {
+    width: 18px;
+    height: 18px;
+
+    font-size: .55rem;
+  }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#140b10">
+  <title>Peony 🌸</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="intro" class="intro">
+    <div class="intro-content">
+      <p class="eyebrow">A piece of my mind.</p>
+      <h1>My Eingel <span>🌸</span></h1>
+      <p>Take your time.</p>
+      <button id="enterBtn">Enter</button>
+    </div>
+  </div>
+
+  <main id="experience" class="experience hidden">
+    <div class="ambient-glow"></div>
+    <div class="breeze-layer" id="breezeLayer"></div>
+
+    <header class="top-message">
+      <span>I love you my love Happy 4th monthsarry.</span>
+    </header>
+
+    <section class="flower-scene">
+      <div id="flower" class="flower" aria-label="Interactive peony"></div>
+      <p id="hint" class="hint">Every petal holds a memory of us.</p>
+    </section>
+
+    <p id="petalCounter" class="counter">0 petals discovered</p>
+
+    <div id="memoryOverlay" class="memory-overlay hidden">
+      <button id="closeMemory" class="close-memory" aria-label="Close memory">×</button>
+      <div class="memory-card">
+        <div class="memory-image-wrap">
+          <img id="memoryImage" src="" alt="A memory of us">
+        </div>
+        <p id="memoryNumber" class="memory-number"></p>
+        <h2 id="memoryTitle"></h2>
+        <p id="memoryText"></p>
+      </div>
+    </div>
+
+    <div id="finalOverlay" class="final-overlay hidden">
+      <div class="final-content">
+        <p class="eyebrow">Every petal had a reason</p>
+        <h2>And somehow,<br>it was always you.</h2>
+        <p id="finalMessage">
+          Even when every petal falls, there is still one thing that stays.
+          I would still choose you.
+        </p>
+        <button id="restartBtn">Let the flower bloom again</button>
+      </div>
+    </div>
+
+    <audio id="music" loop preload="auto">
+      <!-- Replace assets/music/our-song.mp3 with your music file. -->
+      <source src="assets/music/our-song.mp3" type="audio/mpeg">
+    </audio>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
